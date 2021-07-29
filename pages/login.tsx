@@ -13,6 +13,7 @@ import {
 import GoogleIcon from '@material-ui/icons/Google'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import Link from '../src/Link'
+import { signIn } from 'next-auth/client'
 
 export default function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,6 +56,11 @@ export default function Login() {
                 boxShadow: 3,
               },
             }}
+            onClick={() =>
+              signIn('google', {
+                callbackUrl: 'http://localhost:3000/projects',
+              })
+            }
           >
             Sign In With Google
           </Button>
@@ -73,6 +79,9 @@ export default function Login() {
                 boxShadow: 3,
               },
             }}
+            onClick={() =>
+              signIn('github', { callbackUrl: 'http://localhost:3000/projects' })
+            }
           >
             Sign In With Github
           </Button>

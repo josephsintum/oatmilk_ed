@@ -3,20 +3,16 @@ import Container from '@material-ui/core/Container'
 import {
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Divider,
   Grid,
   Typography,
 } from '@material-ui/core'
-import Link from '../src/Link'
+import { ProjectGrid } from './projects'
 
 const heroImg =
   'https://images.unsplash.com/photo-1605627079912-97c3810a11a4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=640&q=80'
 
-function Hero() {
+export function Hero() {
   return (
     <Grid container marginY="140px">
       <Grid item xs px={3}>
@@ -146,59 +142,10 @@ export default function Index() {
           </Typography>
         </Grid>
         <Grid item>
-          <Grid container spacing={4}>
-            {projects.map((project) => (
-              <Grid item key={project.title} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: '10px',
-                  }}
-                >
-                  <CardMedia
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image={project.image}
-                    title="Image title"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="overline" color="text.secondary">
-                      {project.topic}
-                    </Typography>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                      fontWeight="bold"
-                    >
-                      {project.title}
-                    </Typography>
-                    <Typography>
-                      Ages: {project.age}
-                      <br />
-                      {project.body}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button>
-                      <Link
-                        href={'/projects/' + project.id}
-                        sx={{ textDecoration: 'none' }}
-                      >
-                        Learn More
-                      </Link>
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+          <ProjectGrid projects={projects} />
         </Grid>
       </Grid>
     </Container>
   )
 }
+
