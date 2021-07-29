@@ -1,56 +1,87 @@
-import { Toolbar } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
+import { Button, Toolbar } from '@material-ui/core'
 import Link from '../src/Link'
 import * as React from 'react'
 
-export function Navbar() {
+export default function Navbar() {
   return (
     <Toolbar
       component="nav"
       sx={{
+        maxWidth: 'lg',
         borderBottom: 1,
         borderColor: 'divider',
         justifyContent: 'space-between',
         overflowX: 'auto',
+        margin: 'auto',
       }}
     >
-      <Typography
-        component="h2"
+      <Link
         variant="h5"
-        color="primary"
-        fontWeight="bold"
         align="left"
         noWrap
-        sx={{ flex: 1 }}
+        href="/"
+        fontWeight="bold"
+        sx={{
+          flex: 1,
+          textDecoration: 'none',
+          color: 'black',
+          textTransform: 'uppercase',
+        }}
       >
         Oat Craft
-      </Typography>
-      <Link
-        color="primary"
-        noWrap
-        variant="body2"
-        href="#"
-        sx={{ p: 1, flexShrink: 0, textDecoration: 'none' }}
-      >
-        HOME
       </Link>
       <Link
-        color="primary"
         noWrap
-        variant="body2"
-        href="#"
-        sx={{ p: 1, flexShrink: 0, textDecoration: 'none' }}
+        variant="button"
+        href="/"
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
       >
-        CREATE
+        Home
       </Link>
       <Link
-        color="primary"
         noWrap
-        variant="body2"
-        href="#"
-        sx={{ p: 1, flexShrink: 0, textDecoration: 'none' }}
+        variant="button"
+        href="/create"
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
       >
-        SIGN UP
+        Create Project
+      </Link>
+      <Link
+        noWrap
+        variant="button"
+        href="/login"
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
+      >
+        <Button
+          variant="outlined"
+          sx={{
+            border: '2px solid black',
+            color: 'black',
+            ':hover': {
+              border: '2px solid black',
+              color: 'black',
+              boxShadow: 2,
+            },
+          }}
+        >
+          Log In
+        </Button>
+      </Link>
+      <Link
+        noWrap
+        variant="button"
+        href="/signup"
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none' }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            color: 'white',
+            bgcolor: 'primary',
+          }}
+        >
+          Get Started
+        </Button>
       </Link>
     </Toolbar>
   )
