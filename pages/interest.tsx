@@ -19,8 +19,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useSession } from 'next-auth/client'
-import { ProjectCard } from './projects'
-import { projects } from './index'
+import { ProjectCard, projects } from './projects'
 import { useRouter } from 'next/router'
 
 const steps = ['About You', 'Topics & Interest', 'Almost Done...']

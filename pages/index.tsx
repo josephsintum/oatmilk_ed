@@ -1,16 +1,10 @@
 import * as React from 'react'
 import Container from '@material-ui/core/Container'
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Typography,
-} from '@material-ui/core'
+import { Box, Button, Divider, Grid, Typography } from '@material-ui/core'
 import { ProjectGrid } from './projects'
+import { projects } from './projects'
 
-const heroImg =
-  'https://images.unsplash.com/photo-1605627079912-97c3810a11a4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=640&q=80'
+const heroImg = '/heroImg.jpeg'
 
 export function Hero() {
   return (
@@ -31,7 +25,7 @@ export function Hero() {
         </Grid>
       </Grid>
       <Grid item xs px={3}>
-        <img src={heroImg} alt="Hero Image" />
+        <img src={heroImg} alt="Hero Image"  width="100%" height="auto" />
       </Grid>
     </Grid>
   )
@@ -88,42 +82,6 @@ function HowItWorks() {
   )
 }
 
-export const projects = [
-  {
-    id: '1',
-    title: 'Self Driving Car',
-    image: 'https://source.unsplash.com/random',
-    age: '12 - 115',
-    topic: 'Artificial Intelligence',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-  },
-  {
-    id: '2',
-    title: 'Solar Sail',
-    image: 'https://source.unsplash.com/random',
-    age: '12 - 115',
-    topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-  },
-  {
-    id: '3',
-    title: 'Solar Oven',
-    image: 'https://source.unsplash.com/random',
-    age: '12 - 115',
-    topic: 'Physics',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-  },
-
-  {
-    id: '4',
-    title: 'Water AC',
-    image: 'https://source.unsplash.com/random',
-    age: '12 - 115',
-    topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-  },
-]
-
 export default function Index() {
   return (
     <Container maxWidth="lg">
@@ -148,4 +106,3 @@ export default function Index() {
     </Container>
   )
 }
-

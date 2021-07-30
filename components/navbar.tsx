@@ -99,7 +99,7 @@ export default function Navbar() {
             href="/profile"
             sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
           >
-            {session.user.email}
+            {session?.user?.email}
           </Link>
           <Button
             onClick={() => signOut({ callbackUrl: '/' })}
