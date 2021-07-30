@@ -30,7 +30,7 @@ export const projects = [
     image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Artificial Intelligence',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
   {
     id: '2',
@@ -38,7 +38,7 @@ export const projects = [
     image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
   {
     id: '3',
@@ -46,7 +46,7 @@ export const projects = [
     image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Physics',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
 
   {
@@ -55,7 +55,7 @@ export const projects = [
     image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
 ]
 
@@ -74,17 +74,21 @@ export function ProjectCard(props: any) {
   return (
     <Grid item {...rest}>
       <Card
+        variant="outlined"
         sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          borderRadius: '10px',
+          borderRadius: 2,
+          p: 1,
+          border: '2px solid black',
         }}
       >
         <CardMedia
           sx={{
             // 16:9
             pt: '56.25%',
+            borderRadius: 1,
           }}
           image={project.image}
           title="Image title"
