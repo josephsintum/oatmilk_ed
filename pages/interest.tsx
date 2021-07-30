@@ -23,6 +23,13 @@ import { ProjectCard, projects } from './projects'
 import { useRouter } from 'next/router'
 
 const steps = ['About You', 'Topics & Interest', 'Almost Done...']
+const topics = [
+  'Geography',
+  'Artificial Intelligence',
+  'Internet of Things',
+  'Lego',
+  'Nature',
+]
 
 function StepForms(props: { activeStep: number }) {
   const [grade, setGrade] = React.useState('')
@@ -67,46 +74,20 @@ function StepForms(props: { activeStep: number }) {
               2: (
                 <>
                   <FormGroup>
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Geography"
-                      sx={{
-                        p: 1,
-                        ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Artificial Intelligence"
-                      sx={{
-                        p: 1,
-                        ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Internet of Things"
-                      sx={{
-                        p: 1,
-                        ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Lego"
-                      sx={{
-                        p: 1,
-                        ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                      }}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Nature"
-                      sx={{
-                        p: 1,
-                        ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                      }}
-                    />
+                    {topics.map((topic) => (
+                      <FormControlLabel
+                        key={topic}
+                        control={<Checkbox />}
+                        label={topic}
+                        sx={{
+                          p: 1,
+                          my: 1,
+                          border: '1px solid black',
+                          borderRadius: 2,
+                          ':hover': { bgcolor: 'pale', borderRadius: 2 },
+                        }}
+                      />
+                    ))}
                   </FormGroup>
                 </>
               ),
@@ -217,8 +198,12 @@ const Create = () => {
               </Stepper>
               {activeStep === steps.length ? (
                 <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
-                    All steps completed - you&apos;re finished
+                  <Typography
+                    variant="h6"
+                    sx={{ mt: 2, mb: 1 }}
+                    textAlign="center"
+                  >
+                    All steps completed - Redirecting...
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Box sx={{ flex: '1 1 auto' }} />
