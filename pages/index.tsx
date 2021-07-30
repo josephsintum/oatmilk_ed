@@ -88,7 +88,7 @@ function HowItWorks() {
   )
 }
 
-const projects = [
+export const projects = [
   {
     id: '1',
     title: 'Self Driving Car',

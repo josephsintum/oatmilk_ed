@@ -5,11 +5,14 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Checkbox,
+  FormControlLabel,
   Grid,
   Typography,
 } from '@material-ui/core'
 import Link from '../../src/Link'
 import * as React from 'react'
+import { Favorite, FavoriteBorder } from '@material-ui/icons'
 
 export interface Iproject {
   id: string
@@ -60,15 +63,16 @@ export function ProjectGrid({ projects }: { projects: Iproject[] }) {
   return (
     <Grid container spacing={4}>
       {projects.map((project) => (
-        <ProjectCard project={project} />
+        <ProjectCard project={project} xs={12} sm={6} md={4} key={project.id} />
       ))}
     </Grid>
   )
 }
 
-export function ProjectCard(props: { project: Iproject }) {
+export function ProjectCard(props: any) {
+  const { project, ...rest } = props
   return (
-    <Grid item xs={12} sm={6} md={4}>
+    <Grid item {...rest}>
       <Card
         sx={{
           height: '100%',
@@ -82,12 +86,12 @@ export function ProjectCard(props: { project: Iproject }) {
             // 16:9
             pt: '56.25%',
           }}
-          image={props.project.image}
+          image={project.image}
           title="Image title"
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography variant="overline" color="text.secondary">
-            {props.project.topic}
+            {project.topic}
           </Typography>
           <Typography
             gutterBottom
@@ -95,23 +99,41 @@ export function ProjectCard(props: { project: Iproject }) {
             component="h2"
             fontWeight="bold"
           >
-            {props.project.title}
+            {project.title}
           </Typography>
           <Typography>
-            Ages: {props.project.age}
+            Ages: {project.age}
             <br />
-            {props.project.body}
+            {project.body}
           </Typography>
         </CardContent>
         <CardActions>
           <Button>
             <Link
-              href={'/projects/' + props.project.id}
+              href={'/projects/' + project.id}
               sx={{ textDecoration: 'none' }}
             >
               Learn More
             </Link>
           </Button>
+          <FormControlLabel
+            value="end"
+            control={
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
+                sx={{
+                  color: 'pink',
+                  '&.Mui-checked': {
+                    color: 'red',
+                  },
+                }}
+              />
+            }
+            label="34"
+            sx={{ ml: 'auto', fontWeight: 'bold' }}
+            labelPlacement="end"
+          />
         </CardActions>
       </Card>
     </Grid>
