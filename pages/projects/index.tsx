@@ -23,11 +23,11 @@ export interface Iproject {
   body: string
 }
 
-const projects = [
+export const projects = [
   {
     id: '1',
     title: 'Self Driving Car',
-    image: 'https://source.unsplash.com/random',
+    image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Artificial Intelligence',
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
@@ -35,7 +35,7 @@ const projects = [
   {
     id: '2',
     title: 'Solar Sail',
-    image: 'https://source.unsplash.com/random',
+    image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Engineering',
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
@@ -43,7 +43,7 @@ const projects = [
   {
     id: '3',
     title: 'Solar Oven',
-    image: 'https://source.unsplash.com/random',
+    image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Physics',
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
@@ -52,7 +52,7 @@ const projects = [
   {
     id: '4',
     title: 'Water AC',
-    image: 'https://source.unsplash.com/random',
+    image: '/heroImg.jpeg',
     age: '12 - 115',
     topic: 'Engineering',
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
