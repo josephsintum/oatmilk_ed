@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
 import {
+  Avatar,
   Box,
   Button,
   Card,
   CardContent,
+  CardHeader,
   CardMedia,
   Checkbox,
   Container,
@@ -12,11 +14,86 @@ import {
   FormGroup,
   Grid,
   Stack,
+  TextField,
   Typography,
 } from '@material-ui/core'
 import * as React from 'react'
 import PrintIcon from '@material-ui/icons/Print'
 import CheckIcon from '@material-ui/icons/Check'
+import { useSession } from 'next-auth/client'
+
+const Comments = () => {
+  const [session] = useSession()
+  const someComments = [
+    {
+      name: 'John Appleseed',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    },
+    {
+      name: 'John Appleseed',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamt',
+    },
+    {
+      name: 'John Appleseed',
+      comment:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
+    },
+  ]
+  const [AllComments, setAllComments] = React.useState(someComments)
+  const [comment, setComment] = React.useState('')
+
+  const addComment = () => {
+    setAllComments([
+      {
+        name: session?.user?.name ? session?.user?.name : 'Damsel M',
+        comment: comment,
+      },
+      ...AllComments,
+    ])
+    setComment('')
+  }
+
+  return (
+    <Grid container justifyContent="center" my={5}>
+      <Grid item xs={7} display="flex" flexDirection="column">
+        <Typography variant="h4" fontWeight="bold" my={2}>
+          Comments
+        </Typography>
+        <TextField
+          fullWidth
+          label="Leave a comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          multiline
+          rows={3}
+          sx={{ my: 1 }}
+        />
+        <Button
+          sx={{ mb: 2, ml: 'auto' }}
+          variant="contained"
+          onClick={() => addComment()}
+        >
+          Post
+        </Button>
+        {AllComments.map((comment, i) => (
+          <Card sx={{ my: 1 }} variant="outlined" key={'name' + i}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: 'secondary' }} aria-label="comment">
+                  {comment.name[0]}
+                </Avatar>
+              }
+              title={comment.name}
+              subheader={comment.comment}
+            />
+          </Card>
+        ))}
+      </Grid>
+    </Grid>
+  )
+}
 
 const Project = () => {
   const router = useRouter()
@@ -64,9 +141,9 @@ const Project = () => {
                   {project.title}
                 </Typography>
                 <Typography variant="body1" mb={2}>
-                  Ages: {project.age}
+                  Ages: {project.age} years
                 </Typography>
-                <Typography variant="h5" component="p">
+                <Typography variant="body1">
                   {project.body}
                   <br />
                   {project.description}
@@ -97,7 +174,7 @@ const Project = () => {
                     control={<Checkbox />}
                     label={step}
                     sx={{
-                      my: 1,
+                      py: 1,
                       ':hover': { bgcolor: 'pale', borderRadius: 2 },
                     }}
                   />
@@ -240,6 +317,8 @@ const Project = () => {
           </Grid>
 
           <Divider />
+
+          <Comments />
         </Grid>
       </Container>
     </>
