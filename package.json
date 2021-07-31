@@ -7,6 +7,7 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
+    "@ibm-cloud/cloudant": "^0.0.16",
     "@material-ui/core": "next",
     "@material-ui/icons": "^5.0.0-beta.1",
     "clsx": "latest",
