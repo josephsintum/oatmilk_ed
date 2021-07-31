@@ -25,7 +25,7 @@ export interface Iproject {
 
 export const projects = [
   {
-    id: '1',
+    id: '949c081daccadd1b09f8d03c68c53865',
     title: 'Self Driving Car',
     image: '/heroImg.jpeg',
     age: '12 - 115',
@@ -33,7 +33,7 @@ export const projects = [
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
   {
-    id: '2',
+    id: 'b67d07b8fe1fedf5554617f2123baa8b',
     title: 'Solar Sail',
     image: '/heroImg.jpeg',
     age: '12 - 115',
@@ -41,7 +41,7 @@ export const projects = [
     body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
   },
   {
-    id: '3',
+    id: '949c081daccadd1b09f8d03c68c53865',
     title: 'Solar Oven',
     image: '/heroImg.jpeg',
     age: '12 - 115',
@@ -50,7 +50,7 @@ export const projects = [
   },
 
   {
-    id: '4',
+    id: 'b67d07b8fe1fedf5554617f2123baa8b',
     title: 'Water AC',
     image: '/heroImg.jpeg',
     age: '12 - 115',

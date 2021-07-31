@@ -22,6 +22,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { useSession } from 'next-auth/client'
 import { GetServerSideProps } from 'next'
 import { getProjectById } from '../../src/db'
+import { ProjectGrid, projects } from './index'
 
 const Comments = ({ someComments }: { someComments: Comment[] }) => {
   const [session] = useSession()
@@ -105,8 +106,21 @@ export interface Project {
   someComments: Comment[]
 }
 
-const ProjectId = ({ project }: { project: Project }) => {
+function ProjectNotFound() {
   return (
+    <Container maxWidth="lg">
+      <Typography variant="h2" color="error" my={5} textAlign="center">
+        Project Not found
+      </Typography>
+      <ProjectGrid projects={projects} />
+    </Container>
+  )
+}
+
+const ProjectId = ({ project }: { project: Project }) => {
+  return project == null ? (
+    <ProjectNotFound />
+  ) : (
     <>
       <Container maxWidth="lg">
         <Grid my="100px">
@@ -312,9 +326,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (id instanceof Array) id = id[0]
   const project = await getProjectById(id)
 
-  return {
-    props: {
-      project,
-    },
-  }
+  return { props: { project } }
 }

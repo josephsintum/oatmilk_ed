@@ -20,5 +20,8 @@ export function getProjectById(id: string) {
       docId: id,
     })
     .then((response) => response.result)
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log({ error: err })
+      return null
+    })
 }
