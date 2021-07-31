@@ -15,6 +15,8 @@ import {
   Typography,
 } from '@material-ui/core'
 import * as React from 'react'
+import PrintIcon from '@material-ui/icons/Print'
+import CheckIcon from '@material-ui/icons/Check'
 
 const Project = () => {
   const router = useRouter()
@@ -45,6 +47,7 @@ const Project = () => {
       'Attach the propeller to the motor',
       'Congrats! You’re done!',
     ],
+    video: 'https://www.youtube.com/embed/NgXqD_JDn6s',
   }
 
   return (
@@ -80,25 +83,52 @@ const Project = () => {
             </Grid>
           </Grid>
           <Divider />
-          <Grid container my={5}>
-            <Grid item xs={12} my={4}>
+          <Grid container my={5} spacing={4}>
+            <Grid item xs={12}>
               <Typography variant="h4" fontWeight="bold">
                 Steps
               </Typography>
             </Grid>
-            <Grid item>
-              <FormGroup>
+            <Grid item xs={12} md={5}>
+              <FormGroup sx={{ mb: 2 }}>
                 {project.steps.map((step) => (
                   <FormControlLabel
                     key={step}
                     control={<Checkbox />}
                     label={step}
                     sx={{
+                      my: 1,
                       ':hover': { bgcolor: 'pale', borderRadius: 2 },
                     }}
                   />
                 ))}
               </FormGroup>
+              <Button
+                sx={{ mr: 3 }}
+                endIcon={<PrintIcon />}
+                onClick={() => window.print()}
+              >
+                Print Steps
+              </Button>
+              <Button variant="contained" endIcon={<CheckIcon />}>
+                Mark as completed
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={7}>
+              <iframe
+                width="100%"
+                height="100%"
+                src={project.video}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  borderRadius: 5,
+                  border: '1px solid black',
+                  padding: 8,
+                }}
+              />
             </Grid>
           </Grid>
           <Divider />
