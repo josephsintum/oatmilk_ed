@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import {
   Avatar,
   Box,
@@ -21,27 +20,13 @@ import * as React from 'react'
 import PrintIcon from '@material-ui/icons/Print'
 import CheckIcon from '@material-ui/icons/Check'
 import { useSession } from 'next-auth/client'
+import { GetServerSideProps } from 'next'
+import { getProjectById } from '../../src/db'
 
-const Comments = () => {
+const Comments = ({ someComments }: { someComments: Comment[] }) => {
   const [session] = useSession()
-  const someComments = [
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-    },
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamt',
-    },
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-    },
-  ]
-  const [AllComments, setAllComments] = React.useState(someComments)
+
+  const [AllComments, setAllComments] = React.useState([...someComments])
   const [comment, setComment] = React.useState('')
 
   const addComment = () => {
@@ -95,38 +80,32 @@ const Comments = () => {
   )
 }
 
-const Project = () => {
-  const router = useRouter()
-  const { projectId } = router.query
+export interface Comment {
+  name: string
+  comment: string
+}
 
-  const project = {
-    id: '1',
-    title: 'Self Driving Car',
-    image: '/heroImg.jpeg',
-    age: '12 - 115',
-    topic: 'Artificial Intelligence',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamt.',
-    materials: [
-      { title: 'motor', img: '/heroImg.jpeg', price: 2.99 },
-      { title: 'propeller', img: '/heroImg.jpeg', price: 4.5 },
-      { title: 'wires', img: '/heroImg.jpeg', price: 1.99 },
-      { title: 'switch', img: '/heroImg.jpeg', price: 1.99 },
-      { title: 'solar panel', img: '/heroImg.jpeg', price: 12.99 },
-      { title: 'bulb', img: '/heroImg.jpeg', price: 3.99 },
-    ],
-    steps: [
-      'Connect the wires on the motor to the solar panel using soldering',
-      'Cut two long rectangles of Styrofoam and glue them down to the cardboard with 3 inches separation',
-      'Glue the motor to one Styrofoam',
-      'Glue the solar panel to the other Styrofoam facing towards the sun',
-      'Attach the propeller to the motor',
-      'Congrats! You’re done!',
-    ],
-    video: 'https://www.youtube.com/embed/NgXqD_JDn6s',
-  }
+export interface Material {
+  title: string
+  img: string
+  price: number
+}
 
+export interface Project {
+  id: string
+  title: string
+  image: string
+  age: string
+  topic: string
+  body: string
+  description: string
+  materials: Material[]
+  steps: string[]
+  video: string
+  someComments: Comment[]
+}
+
+const ProjectId = ({ project }: { project: Project }) => {
   return (
     <>
       <Container maxWidth="lg">
@@ -135,7 +114,7 @@ const Project = () => {
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
                 <Typography variant="overline" color="text.secondary">
-                  {project.topic}: {projectId}
+                  {project.topic}
                 </Typography>
                 <Typography variant="h2" fontWeight="bold" mb={3}>
                   {project.title}
@@ -318,11 +297,24 @@ const Project = () => {
 
           <Divider />
 
-          <Comments />
+          <Comments someComments={project.someComments} />
         </Grid>
       </Container>
     </>
   )
 }
 
-export default Project
+export default ProjectId
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let id = context.query.projectId
+  if (!id) return { props: {} }
+  if (id instanceof Array) id = id[0]
+  const project = await getProjectById(id)
+
+  return {
+    props: {
+      project,
+    },
+  }
+}
