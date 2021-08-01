@@ -25,6 +25,7 @@ import { GetServerSideProps } from 'next'
 import { getProjectById } from '../../src/db'
 import { ProjectGrid, projects } from './index'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import { useForm, Controller } from 'react-hook-form'
 
 export const Comments = ({ someComments }: { someComments?: Comment[] }) => {
   const [session] = useSession()
@@ -126,6 +127,19 @@ function ProjectNotFound() {
 }
 
 const ProjectId = ({ project }: { project: Project }) => {
+  const { control, watch } = useForm<{ material: boolean[] }>()
+  const [total, setTotal] = React.useState<number>()
+
+  React.useEffect(() => {
+    let sum = 0
+    watch('material').map((val, index) => {
+      if (val) {
+        sum += project.materials[index].price
+      }
+    })
+    setTotal(sum)
+  }, [watch('material')])
+
   return project == null ? (
     <ProjectNotFound />
   ) : (
@@ -238,8 +252,8 @@ const ProjectId = ({ project }: { project: Project }) => {
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
                 <Grid container spacing={3} mb={3}>
-                  {project.materials.map((req) => (
-                    <Grid item md={6} key={req.title}>
+                  {project.materials.map((material, index) => (
+                    <Grid item md={6} key={material.title}>
                       <Card
                         variant="outlined"
                         sx={{
@@ -252,21 +266,28 @@ const ProjectId = ({ project }: { project: Project }) => {
                       >
                         <CardMedia
                           sx={{ width: 145, borderRadius: 1 }}
-                          image={req.img}
-                          title={req.title}
+                          image={material.img}
+                          title={material.title}
                         />
                         <CardContent sx={{ flex: '1 0 auto', py: 1 }}>
                           <Stack direction="row" alignItems="center">
                             <Box>
                               <Typography variant="subtitle1" mb="auto">
-                                {req.title}
+                                {material.title}
                               </Typography>
                               <Typography variant="h6" fontWeight="bold">
-                                ${req.price}
+                                ${material.price}
                               </Typography>
                             </Box>
                             <Grid item ml="auto">
-                              <Checkbox defaultChecked />
+                              <Controller
+                                name={`material.${index}`}
+                                control={control}
+                                defaultValue={true}
+                                render={({ field }) => (
+                                  <Checkbox {...field} defaultChecked />
+                                )}
+                              />
                             </Grid>
                           </Stack>
                         </CardContent>
@@ -290,7 +311,7 @@ const ProjectId = ({ project }: { project: Project }) => {
                     textAlign="center"
                     mb={4}
                   >
-                    $23.45
+                    ${total}
                   </Typography>
                 </Box>
 
