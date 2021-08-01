@@ -23,6 +23,7 @@ import {
 import { Project } from './[projectId]'
 import CloseIcon from '@material-ui/icons/Close'
 import ButtonBase from '@material-ui/core/ButtonBase'
+import { useRouter } from 'next/router'
 
 const project = {
   id: '1',
@@ -91,6 +92,7 @@ const project = {
 }
 
 const Create = () => {
+  const router = useRouter()
   const { control, handleSubmit, watch } = useForm<Project>({
     defaultValues: {
       steps: [{ index: 0, value: 'Gather your materials' }],
@@ -113,8 +115,23 @@ const Create = () => {
     name: 'materials',
   })
 
-  const onSubmit: SubmitHandler<Project> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<Project> = async (data) => {
+    // data cleanup
+    data = {
+      ...data,
+      someComments: [],
+      materials: data.materials ? data.materials : [],
+    }
+
+    await fetch('/api/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        router.push('/projects/' + response.results)
+      })
   }
 
   return (

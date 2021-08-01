@@ -26,10 +26,12 @@ import { getProjectById } from '../../src/db'
 import { ProjectGrid, projects } from './index'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 
-export const Comments = ({ someComments }: { someComments: Comment[] }) => {
+export const Comments = ({ someComments }: { someComments?: Comment[] }) => {
   const [session] = useSession()
 
-  const [AllComments, setAllComments] = React.useState([...someComments])
+  const [AllComments, setAllComments] = React.useState(
+    someComments ? [...someComments] : []
+  )
   const [comment, setComment] = React.useState('')
 
   const addComment = () => {
@@ -109,7 +111,7 @@ export interface Project {
   steps: Step[]
   materials: Material[]
   video: string
-  someComments: Comment[]
+  someComments?: Comment[]
 }
 
 function ProjectNotFound() {
