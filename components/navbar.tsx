@@ -1,4 +1,4 @@
-import { Button, Toolbar } from '@material-ui/core'
+import { Button, Divider, Menu, MenuItem, Toolbar } from '@material-ui/core'
 import Link from '../src/Link'
 import * as React from 'react'
 import { signOut, useSession } from 'next-auth/client'
@@ -43,11 +43,20 @@ export default function Navbar() {
       <Link
         noWrap
         variant="button"
+        href="/projects"
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
+      >
+        Projects
+      </Link>
+      <Link
+        noWrap
+        variant="button"
         href="/projects/create"
         sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
       >
         Create Project
       </Link>
+      <Language />
       {!session && (
         <>
           {/*Not logged in*/}
@@ -110,5 +119,87 @@ export default function Navbar() {
         </>
       )}
     </Toolbar>
+  )
+}
+
+function Language() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  return (
+    <>
+      <Button
+        id="basic-button"
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
+      >
+        Languages
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          <Link
+            noWrap
+            variant="button"
+            href="/home_es.html"
+            target="_blank"
+            sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
+          >
+            🇲🇽 Spanish
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link
+            noWrap
+            variant="button"
+            href="/home_fr.html"
+            target="_blank"
+            sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
+          >
+            🇫🇷 French
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link
+            noWrap
+            variant="button"
+            href="/home_zh.html"
+            target="_blank"
+            sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
+          >
+            🇨🇳 Chinese
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link
+            noWrap
+            variant="button"
+            href="/home_hi.html"
+            target="_blank"
+            sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
+          >
+            🇮🇳 Hindi
+          </Link>
+        </MenuItem>
+        <Divider />
+        <MenuItem>More Coming Soon</MenuItem>
+      </Menu>
+    </>
   )
 }
