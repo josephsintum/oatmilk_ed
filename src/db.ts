@@ -13,6 +13,7 @@ export function getAllProjects() {
       limit: 10,
     })
     .then((response) => response.result.rows)
+    .catch((err) => console.log(err))
 }
 
 // fetch project by id
@@ -35,7 +36,6 @@ export function getProjectById(id: string) {
 // param: project object
 // returns project id
 export function createProject(project: Project) {
-
   return service
     .postDocument({
       db: projectsDB,

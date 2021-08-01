@@ -19,8 +19,11 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useSession } from 'next-auth/client'
-import { ProjectCard, projects } from './projects'
+import { ProjectCard } from './projects'
 import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import { getAllProjects } from '../src/db'
+import { Project } from './projects/[projectId]'
 
 const steps = ['About You', 'Topics & Interest', 'Almost Done...']
 const topics = [
@@ -31,11 +34,15 @@ const topics = [
   'Nature',
 ]
 
-function StepForms(props: { activeStep: number }) {
+function StepForms(props: {
+  activeStep: number
+  projects: { doc: Project; id: string }[]
+}) {
   const [grade, setGrade] = React.useState('')
   const handleChange = (event: SelectChangeEvent) => {
     setGrade(event.target.value as string)
   }
+
   return (
     <Container maxWidth="sm">
       <Grid container my={4}>
@@ -93,9 +100,10 @@ function StepForms(props: { activeStep: number }) {
               ),
               3: (
                 <Grid container spacing={4}>
-                  {projects.map((project) => (
+                  {props.projects.map((project) => (
                     <ProjectCard
-                      project={project}
+                      project={project.doc}
+                      // @ts-ignore
                       xs={12}
                       sm={6}
                       key={project.id}
@@ -111,7 +119,7 @@ function StepForms(props: { activeStep: number }) {
   )
 }
 
-const Create = () => {
+const Interest = ({ projects }: any) => {
   const [session] = useSession()
   const router = useRouter()
 
@@ -213,7 +221,7 @@ const Create = () => {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <StepForms activeStep={activeStep} />
+                  <StepForms activeStep={activeStep} projects={projects} />
 
                   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Button
@@ -248,4 +256,9 @@ const Create = () => {
   )
 }
 
-export default Create
+export default Interest
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const projects = await getAllProjects()
+  return { props: { projects } }
+}

@@ -13,64 +13,32 @@ import {
 import Link from '../../src/Link'
 import * as React from 'react'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import { GetServerSideProps } from 'next'
+import { getAllProjects } from '../../src/db'
+import { Project } from './[projectId]'
 
-export interface Iproject {
-  id: string
-  title: string
-  image: string
-  age: string
-  topic: string
-  body: string
-}
-
-export const projects = [
-  {
-    id: '949c081daccadd1b09f8d03c68c53865',
-    title: 'Self Driving Car',
-    image: '/heroImg.jpeg',
-    age: '12 - 115',
-    topic: 'Artificial Intelligence',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-  },
-  {
-    id: 'b67d07b8fe1fedf5554617f2123baa8b',
-    title: 'Solar Sail',
-    image: '/heroImg.jpeg',
-    age: '12 - 115',
-    topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-  },
-  {
-    id: '949c081daccadd1b09f8d03c68c53865',
-    title: 'Solar Oven',
-    image: '/heroImg.jpeg',
-    age: '12 - 115',
-    topic: 'Physics',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-  },
-
-  {
-    id: 'b67d07b8fe1fedf5554617f2123baa8b',
-    title: 'Water AC',
-    image: '/heroImg.jpeg',
-    age: '12 - 115',
-    topic: 'Engineering',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-  },
-]
-
-export function ProjectGrid({ projects }: { projects: Iproject[] }) {
+export function ProjectGrid({
+  projects,
+}: {
+  projects: { doc: Project; id: string }[]
+}) {
   return (
     <Grid container spacing={4}>
       {projects.map((project) => (
-        <ProjectCard project={project} xs={12} sm={6} md={4} key={project.id} />
+        <ProjectCard
+          project={project.doc}
+          // @ts-ignore
+          xs={12}
+          sm={6}
+          md={4}
+          key={project.id}
+        />
       ))}
     </Grid>
   )
 }
 
-export function ProjectCard(props: any) {
-  const { project, ...rest } = props
+export function ProjectCard({ project, ...rest }: { project: Project }) {
   return (
     <Grid item {...rest}>
       <Card
@@ -90,7 +58,7 @@ export function ProjectCard(props: any) {
             pt: '56.25%',
             borderRadius: 1,
           }}
-          image={project.image}
+          image={project.image || '/heroImg.jpeg'}
           title="Image title"
         />
         <CardContent sx={{ flexGrow: 1 }}>
@@ -105,16 +73,15 @@ export function ProjectCard(props: any) {
           >
             {project.title}
           </Typography>
-          <Typography>
-            Ages: {project.age}
-            <br />
-            {project.body}
+          <Typography variant="subtitle2">Ages: {project.age}</Typography>
+          <Typography variant="body1">
+            {project.description?.slice(0, 80)}
           </Typography>
         </CardContent>
         <CardActions>
           <Button>
             <Link
-              href={'/projects/' + project.id}
+              href={'/projects/' + project._id}
               sx={{ textDecoration: 'none' }}
             >
               Learn More
@@ -144,7 +111,7 @@ export function ProjectCard(props: any) {
   )
 }
 
-export default function Index() {
+export default function Index({ projects }: { projects: any }) {
   return (
     <Container maxWidth="lg">
       <Grid container direction="column" spacing={2} marginY="100px">
@@ -159,4 +126,9 @@ export default function Index() {
       </Grid>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const projects = await getAllProjects()
+  return { props: { projects } }
 }

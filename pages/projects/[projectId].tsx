@@ -23,7 +23,6 @@ import CheckIcon from '@material-ui/icons/Check'
 import { useSession } from 'next-auth/client'
 import { GetServerSideProps } from 'next'
 import { getProjectById } from '../../src/db'
-import { ProjectGrid, projects } from './index'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { useForm, Controller } from 'react-hook-form'
 
@@ -103,6 +102,7 @@ export interface Step {
 }
 
 export interface Project {
+  _id?: string
   id: string
   title: string
   image: string
@@ -115,24 +115,13 @@ export interface Project {
   someComments?: Comment[]
 }
 
-function ProjectNotFound() {
-  return (
-    <Container maxWidth="lg">
-      <Typography variant="h2" color="error" my={5} textAlign="center">
-        Project Not found
-      </Typography>
-      <ProjectGrid projects={projects} />
-    </Container>
-  )
-}
-
 const ProjectId = ({ project }: { project: Project }) => {
   const { control, watch } = useForm<{ material: boolean[] }>()
   const [total, setTotal] = React.useState<number>()
 
   React.useEffect(() => {
     let sum = 0
-    watch('material').map((val, index) => {
+    watch('material')?.map((val, index) => {
       if (val) {
         sum += project.materials[index].price
       }
@@ -140,9 +129,7 @@ const ProjectId = ({ project }: { project: Project }) => {
     setTotal(sum)
   }, [watch('material')])
 
-  return project == null ? (
-    <ProjectNotFound />
-  ) : (
+  return (
     <>
       <Container maxWidth="lg">
         <Grid my="100px">
@@ -301,63 +288,67 @@ const ProjectId = ({ project }: { project: Project }) => {
                   recycled parts
                 </Alert>
               </Grid>
-              <Grid item xs={12} md={4}>
-                <Box width="fit-content" mx="auto">
-                  <Typography variant="overline">Total</Typography>
-                  <Typography
-                    variant="h2"
-                    component="p"
-                    // fontWeight="bold"
-                    textAlign="center"
-                    mb={4}
-                  >
-                    ${total}
-                  </Typography>
-                </Box>
+              {project.materials?.length ? (
+                <Grid item xs={12} md={4}>
+                  <Box width="fit-content" mx="auto">
+                    <Typography variant="overline">Total</Typography>
+                    <Typography
+                      variant="h2"
+                      component="p"
+                      // fontWeight="bold"
+                      textAlign="center"
+                      mb={4}
+                    >
+                      ${total}
+                    </Typography>
+                  </Box>
 
-                <Button fullWidth variant="contained">
-                  Buy Now
-                </Button>
-                <Typography
-                  variant="overline"
-                  component="p"
-                  align="center"
-                  my={2}
-                >
-                  OR
-                </Typography>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  sx={{
-                    border: '2px solid black',
-                    color: 'black',
-                    ':hover': { border: '2px solid black' },
-                  }}
-                >
-                  Order With School Account
-                </Button>
-                <Typography
-                  variant="overline"
-                  component="p"
-                  textAlign="center"
-                  my={1}
-                >
-                  Have your school pay for your supplies
-                </Typography>
-                <Typography
-                  variant="body2"
-                  mt={4}
-                  color="text.disabled"
-                  textAlign="center"
-                >
-                  Free regular shipping within the United States
-                  <br />
-                  We offer pickup at your local school
-                  <br />
-                  We accept returns and exchanges within 14 days.
-                </Typography>
-              </Grid>
+                  <Button fullWidth variant="contained">
+                    Buy Now
+                  </Button>
+                  <Typography
+                    variant="overline"
+                    component="p"
+                    align="center"
+                    my={2}
+                  >
+                    OR
+                  </Typography>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    sx={{
+                      border: '2px solid black',
+                      color: 'black',
+                      ':hover': { border: '2px solid black' },
+                    }}
+                  >
+                    Order With School Account
+                  </Button>
+                  <Typography
+                    variant="overline"
+                    component="p"
+                    textAlign="center"
+                    my={1}
+                  >
+                    Have your school pay for your supplies
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    mt={4}
+                    color="text.disabled"
+                    textAlign="center"
+                  >
+                    Free regular shipping within the United States
+                    <br />
+                    We offer pickup at your local school
+                    <br />
+                    We accept returns and exchanges within 14 days.
+                  </Typography>
+                </Grid>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
 
@@ -377,6 +368,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!id) return { props: {} }
   if (id instanceof Array) id = id[0]
   const project = await getProjectById(id)
+  if (!project) return { notFound: true }
 
   return { props: { project } }
 }

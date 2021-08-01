@@ -2,7 +2,8 @@ import * as React from 'react'
 import Container from '@material-ui/core/Container'
 import { Box, Button, Divider, Grid, Typography } from '@material-ui/core'
 import { ProjectGrid } from './projects'
-import { projects } from './projects'
+import { GetServerSideProps } from 'next'
+import { getAllProjects } from '../src/db'
 
 const heroImg = '/heroImg.jpeg'
 
@@ -25,7 +26,7 @@ export function Hero() {
         </Grid>
       </Grid>
       <Grid item xs px={3}>
-        <img src={heroImg} alt="Hero Image"  width="100%" height="auto" />
+        <img src={heroImg} alt="Hero Image" width="100%" height="auto" />
       </Grid>
     </Grid>
   )
@@ -82,7 +83,7 @@ function HowItWorks() {
   )
 }
 
-export default function Index() {
+export default function Index({ projects }: { projects: any }) {
   return (
     <Container maxWidth="lg">
       <Hero />
@@ -105,4 +106,9 @@ export default function Index() {
       </Grid>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const projects = await getAllProjects()
+  return { props: { projects } }
 }
