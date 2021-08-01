@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -231,10 +232,13 @@ const ProjectId = ({ project }: { project: Project }) => {
               <Typography variant="h4" fontWeight="bold">
                 Materials
               </Typography>
+              <Typography variant="overline">
+                Use the Checkboxes to buy ONLY what you need.
+              </Typography>
             </Grid>
             <Grid container spacing={4} alignItems="center">
               <Grid item xs={12} md={8}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={3}>
                   {project.materials.map((req) => (
                     <Grid item md={6} key={req.title}>
                       <Card
@@ -272,6 +276,10 @@ const ProjectId = ({ project }: { project: Project }) => {
                     </Grid>
                   ))}
                 </Grid>
+                <Alert severity="success">
+                  These materials are sustainably sourced and built with
+                  recycled parts
+                </Alert>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Box width="fit-content" mx="auto">
