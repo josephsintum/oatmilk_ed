@@ -23,6 +23,7 @@ import { useSession } from 'next-auth/client'
 import { GetServerSideProps } from 'next'
 import { getProjectById } from '../../src/db'
 import { ProjectGrid, projects } from './index'
+import { Favorite, FavoriteBorder } from '@material-ui/icons'
 
 const Comments = ({ someComments }: { someComments: Comment[] }) => {
   const [session] = useSession()
@@ -136,11 +137,29 @@ const ProjectId = ({ project }: { project: Project }) => {
                 <Typography variant="body1" mb={2}>
                   Ages: {project.age} years
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" mb={3}>
                   {project.body}
                   <br />
                   {project.description}
                 </Typography>
+                <FormControlLabel
+                  value="end"
+                  control={
+                    <Checkbox
+                      icon={<FavoriteBorder />}
+                      checkedIcon={<Favorite />}
+                      sx={{
+                        color: 'pink',
+                        '&.Mui-checked': {
+                          color: 'red',
+                        },
+                      }}
+                    />
+                  }
+                  label="34 likes"
+                  sx={{ ml: 'auto', fontWeight: 'bold' }}
+                  labelPlacement="end"
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <img
