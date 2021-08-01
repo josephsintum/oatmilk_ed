@@ -25,7 +25,7 @@ import { getProjectById } from '../../src/db'
 import { ProjectGrid, projects } from './index'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 
-const Comments = ({ someComments }: { someComments: Comment[] }) => {
+export const Comments = ({ someComments }: { someComments: Comment[] }) => {
   const [session] = useSession()
 
   const [AllComments, setAllComments] = React.useState([...someComments])
@@ -93,6 +93,11 @@ export interface Material {
   price: number
 }
 
+export interface Step {
+  index?: number
+  value: string
+}
+
 export interface Project {
   id: string
   title: string
@@ -101,8 +106,8 @@ export interface Project {
   topic: string
   body: string
   description: string
+  steps: Step[]
   materials: Material[]
-  steps: string[]
   video: string
   someComments: Comment[]
 }
@@ -182,9 +187,9 @@ const ProjectId = ({ project }: { project: Project }) => {
               <FormGroup sx={{ mb: 2 }}>
                 {project.steps.map((step) => (
                   <FormControlLabel
-                    key={step}
+                    key={step.value}
                     control={<Checkbox />}
-                    label={step}
+                    label={step.value}
                     sx={{
                       py: 1,
                       ':hover': { bgcolor: 'pale', borderRadius: 2 },
