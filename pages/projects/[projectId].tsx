@@ -105,7 +105,6 @@ export interface Project {
   image: string
   age: string
   topic: string
-  body: string
   description: string
   steps: Step[]
   materials: Material[]
@@ -144,8 +143,6 @@ const ProjectId = ({ project }: { project: Project }) => {
                   Ages: {project.age} years
                 </Typography>
                 <Typography variant="body1" mb={3}>
-                  {project.body}
-                  <br />
                   {project.description}
                 </Typography>
                 <FormControlLabel

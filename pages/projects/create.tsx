@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Checkbox,
   Container,
   Divider,
   Grid,
@@ -23,6 +22,7 @@ import {
 } from 'react-hook-form'
 import { Project } from './[projectId]'
 import CloseIcon from '@material-ui/icons/Close'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 const project = {
   id: '1',
@@ -96,9 +96,21 @@ const Create = () => {
       steps: [{ index: 0, value: 'Gather your materials' }],
     },
   })
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: stepFields,
+    append: stepAppend,
+    remove: stepRemove,
+  } = useFieldArray({
     control,
     name: 'steps',
+  })
+  const {
+    fields: materialFields,
+    append: materialAppend,
+    remove: materialRemove,
+  } = useFieldArray({
+    control,
+    name: 'materials',
   })
 
   const onSubmit: SubmitHandler<Project> = (data) => {
@@ -117,20 +129,6 @@ const Create = () => {
               <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name="topic"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        label="Topic"
-                        helperText="Ex. Geography, Engineering, Lego"
-                        margin="normal"
-                        fullWidth
-                        {...field}
-                      />
-                    )}
-                  />
-                  <Controller
                     name="title"
                     control={control}
                     defaultValue=""
@@ -138,6 +136,20 @@ const Create = () => {
                       <TextField
                         label="Title"
                         helperText="Ex. Self driving Car"
+                        margin="normal"
+                        fullWidth
+                        {...field}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="topic"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        label="Topic"
+                        helperText="Ex. Geography, Engineering, Lego"
                         margin="normal"
                         fullWidth
                         {...field}
@@ -159,20 +171,6 @@ const Create = () => {
                     )}
                   />
 
-                  <Controller
-                    name="body"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        label="Short Description"
-                        helperText="Expert of description"
-                        margin="normal"
-                        fullWidth
-                        {...field}
-                      />
-                    )}
-                  />
                   <Controller
                     name="description"
                     control={control}
@@ -223,7 +221,7 @@ const Create = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} md={5}>
-                {fields.map((field, index) => (
+                {stepFields.map((field, index) => (
                   <Controller
                     key={field.id}
                     name={`steps.${index}.value`}
@@ -240,7 +238,7 @@ const Create = () => {
                             <InputAdornment position="end">
                               <IconButton
                                 aria-label="delete"
-                                onClick={() => remove(index)}
+                                onClick={() => stepRemove(index)}
                               >
                                 <CloseIcon />
                               </IconButton>
@@ -255,7 +253,7 @@ const Create = () => {
                   variant="contained"
                   sx={{ float: 'right', my: 1 }}
                   onClick={() => {
-                    append({ value: '', index: 0 })
+                    stepAppend({ value: '', index: 0 })
                   }}
                 >
                   + Add step
@@ -299,11 +297,62 @@ const Create = () => {
                   Materials
                 </Typography>
               </Grid>
-              <Grid container spacing={4} alignItems="center">
+              <Grid container spacing={4}>
                 <Grid item xs={12} md={8}>
+                  <Typography variant="subtitle1" mb={2}>
+                    Choose materials
+                  </Typography>
                   <Grid container spacing={3}>
                     {project.materials.map((req) => (
                       <Grid item md={6} key={req.title}>
+                        <ButtonBase
+                          focusRipple
+                          onClick={() => materialAppend({ ...req })}
+                        >
+                          <Card
+                            variant="outlined"
+                            sx={{
+                              display: 'flex',
+                              width: '340px',
+                              p: 1,
+                              border: '1px solid black',
+                              borderRadius: 2,
+                              ':hover': {
+                                bgcolor: 'pale',
+                              },
+                            }}
+                          >
+                            <CardMedia
+                              sx={{ width: 145, borderRadius: 1 }}
+                              image={req.img}
+                              title={req.title}
+                            />
+                            <CardContent sx={{ flex: '1 0 auto', py: 1 }}>
+                              <Stack direction="row" alignItems="center">
+                                <Box>
+                                  <Typography variant="subtitle1" mb="auto">
+                                    {req.title}
+                                  </Typography>
+                                  <Typography variant="h6" fontWeight="bold">
+                                    ${req.price}
+                                  </Typography>
+                                </Box>
+                              </Stack>
+                            </CardContent>
+                            <div />
+                          </Card>
+                        </ButtonBase>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle1" mb={2}>
+                    Selected Materials
+                  </Typography>
+                  <Grid container spacing={3}>
+                    {materialFields.map((req, index) => (
+                      <Grid item xs key={req.title}>
                         <Card
                           variant="outlined"
                           sx={{
@@ -319,7 +368,7 @@ const Create = () => {
                             image={req.img}
                             title={req.title}
                           />
-                          <CardContent sx={{ flex: '1 0 auto', py: 1 }}>
+                          <CardContent sx={{ flex: '1 0 auto', py: 1, pr: 0 }}>
                             <Stack direction="row" alignItems="center">
                               <Box>
                                 <Typography variant="subtitle1" mb="auto">
@@ -330,7 +379,13 @@ const Create = () => {
                                 </Typography>
                               </Box>
                               <Grid item ml="auto">
-                                <Checkbox defaultChecked />
+                                <IconButton
+                                  aria-label="delete"
+                                  color="error"
+                                  onClick={() => materialRemove(index)}
+                                >
+                                  <CloseIcon />
+                                </IconButton>
                               </Grid>
                             </Stack>
                           </CardContent>
@@ -340,70 +395,23 @@ const Create = () => {
                     ))}
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Box width="fit-content" mx="auto">
-                    <Typography variant="overline">Total</Typography>
-                    <Typography
-                      variant="h2"
-                      component="p"
-                      // fontWeight="bold"
-                      textAlign="center"
-                      mb={4}
-                    >
-                      $23.45
-                    </Typography>
-                  </Box>
-
-                  <Button fullWidth variant="contained">
-                    Buy Now
-                  </Button>
-                  <Typography
-                    variant="overline"
-                    component="p"
-                    align="center"
-                    my={2}
-                  >
-                    OR
-                  </Typography>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    sx={{
-                      border: '2px solid black',
-                      color: 'black',
-                      ':hover': { border: '2px solid black' },
-                    }}
-                  >
-                    Order With School Account
-                  </Button>
-                  <Typography
-                    variant="overline"
-                    component="p"
-                    textAlign="center"
-                    my={1}
-                  >
-                    Have your school pay for your supplies
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    mt={4}
-                    color="text.disabled"
-                    textAlign="center"
-                  >
-                    Free regular shipping within the United States
-                    <br />
-                    We offer pickup at your local school
-                    <br />
-                    We accept returns and exchanges within 14 days.
-                  </Typography>
-                </Grid>
               </Grid>
             </Grid>
 
             <Divider />
-            <Button variant="contained" type="submit">
-              Publish Project
-            </Button>
+            <Grid container my={5}>
+              <Grid item xs>
+                <Typography>You're all done 🎉</Typography>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                  sx={{ float: 'right' }}
+                >
+                  Publish Project
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Container>
       </form>
