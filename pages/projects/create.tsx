@@ -91,9 +91,9 @@ const project = {
 }
 
 const Create = () => {
-  const { control, handleSubmit } = useForm<Project>({
+  const { control, handleSubmit, watch } = useForm<Project>({
     defaultValues: {
-      steps: [{ index: 0, value: 'Gather your material' }],
+      steps: [{ index: 0, value: 'Gather your materials' }],
     },
   })
   const { fields, append, remove } = useFieldArray({
@@ -261,11 +261,25 @@ const Create = () => {
                   + Add step
                 </Button>
               </Grid>
-              <Grid item xs={12} md={7}>
+              <Grid item xs={12} md={7} display="flex" flexDirection="column">
+                <Controller
+                  name="video"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Youtube Embed Link"
+                      helperText="Copy Youtube embed link and paste here"
+                      margin="normal"
+                      fullWidth
+                      {...field}
+                    />
+                  )}
+                />
                 <iframe
                   width="100%"
                   height="100%"
-                  src={project.video}
+                  src={watch('video')}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
