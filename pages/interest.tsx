@@ -6,10 +6,15 @@ import {
   Container,
   FormControl,
   FormControlLabel,
-  FormGroup,
+  FormLabel,
   Grid,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   SelectChangeEvent,
   Step,
@@ -19,19 +24,113 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useSession } from 'next-auth/client'
-import { ProjectCard } from './projects'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../src/db'
 import { Project } from './projects/[projectId]'
+import { Favorite, FavoriteBorder } from '@material-ui/icons'
 
 const steps = ['About You', 'Topics & Interest', 'Almost Done...']
-const topics = [
-  'Geography',
-  'Artificial Intelligence',
-  'Internet of Things',
-  'Lego',
-  'Nature',
+
+export function TitlebarBelowImageList() {
+  return (
+    <ImageList sx={{ width: '100%' }} cols={3} gap={32}>
+      {itemData.map((item) => (
+        <ImageListItem
+          key={item.img}
+          sx={{
+            ':hover': {}, // todo: add hover state
+          }}
+        >
+          <img
+            srcSet={`${item.img}?w=248&fit=crop&auto=format 1x,
+                ${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            alt={item.title}
+            loading="lazy"
+            style={{ borderRadius: 8 }}
+          />
+          <ImageListItemBar
+            sx={{
+              borderRadius: '8px',
+              background:
+                'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+            }}
+            title={
+              <Typography variant="h5" fontWeight="bold">
+                {item.title}
+              </Typography>
+            }
+            // position="top"
+            actionIcon={
+              <Checkbox
+                sx={{
+                  color: 'lightgrey',
+                  '&.Mui-checked': {
+                    color: 'orangered',
+                  },
+                }}
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
+              />
+            }
+            actionPosition="right"
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
+  )
+}
+
+const itemData = [
+  {
+    img: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f',
+    title: 'Internet of Things',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1537884944318-390069bb8665',
+    title: 'Code',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30',
+    title: 'Painting',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1594676979216-380a0257305d',
+    title: 'Flowers',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1549057736-889b732754a2',
+    title: 'Sports',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1576806021995-9f68eb39f10b',
+    title: 'Fish',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b',
+    title: 'Lego',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1547592180-85f173990554',
+    title: 'Food',
+  },
+  {
+    img: 'https://images.unsplash.com/3/jerry-adney.jpg',
+    title: 'Nature',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1589254065878-42c9da997008',
+    title: 'Robots',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1521618755572-156ae0cdd74d',
+    title: 'Renewable Energy',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1517976547714-720226b864c1',
+    title: 'Rockets',
+  },
 ]
 
 function StepForms(props: {
@@ -44,16 +143,19 @@ function StepForms(props: {
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Grid container my={4}>
         <Grid item xs>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            Step {props.activeStep + 1}
-          </Typography>
           {
             {
               1: (
-                <>
+                <Grid item xs maxWidth="sm" mx="auto">
+                  <Typography variant="overline" sx={{ mt: 2 }}>
+                    Step {props.activeStep + 1}
+                  </Typography>
+                  <Typography variant="h4" sx={{ mb: 2 }}>
+                    About You
+                  </Typography>
                   <TextField
                     label="School"
                     variant="outlined"
@@ -76,39 +178,103 @@ function StepForms(props: {
                     fullWidth
                     margin="normal"
                   />
-                </>
+                </Grid>
               ),
               2: (
-                <>
-                  <FormGroup>
-                    {topics.map((topic) => (
-                      <FormControlLabel
-                        key={topic}
-                        control={<Checkbox />}
-                        label={topic}
-                        sx={{
-                          p: 1,
-                          my: 1,
-                          border: '1px solid black',
-                          borderRadius: 2,
-                          ':hover': { bgcolor: 'pale', borderRadius: 2 },
-                        }}
-                      />
-                    ))}
-                  </FormGroup>
-                </>
+                <Grid item xs mx="auto">
+                  <Typography variant="overline" sx={{ mt: 2 }}>
+                    Step {props.activeStep + 1}
+                  </Typography>
+                  <Typography variant="h4" sx={{ mb: 5 }}>
+                    Choose Your Interest.
+                  </Typography>
+                  <TitlebarBelowImageList />
+                </Grid>
               ),
               3: (
-                <Grid container spacing={4}>
-                  {props.projects.map((project) => (
-                    <ProjectCard
-                      project={project.doc}
-                      // @ts-ignore
-                      xs={12}
-                      sm={6}
-                      key={project.id}
-                    />
-                  ))}
+                <Grid item xs maxWidth="sm" mx="auto">
+                  <Typography variant="overline" sx={{ mt: 2 }}>
+                    Step {props.activeStep + 1}
+                  </Typography>
+                  <Typography variant="h4" sx={{ mb: 2 }}>
+                    About Your Experience
+                  </Typography>
+                  <FormControl component="fieldset" margin="normal">
+                    <FormLabel component="legend">
+                      What is your level of programming?
+                    </FormLabel>
+                    <RadioGroup row name="row-radio-buttons-group">
+                      <FormControlLabel
+                        value=""
+                        control={<Radio />}
+                        label="Expert"
+                      />
+                      <FormControlLabel
+                        value="Sometimes"
+                        control={<Radio />}
+                        label="Still learning"
+                      />
+                      <FormControlLabel
+                        value="Barely or No Experience"
+                        control={<Radio />}
+                        label="Barely or never"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <FormControl component="fieldset" margin="normal">
+                    <FormLabel component="legend">
+                      How often do you work on projects?
+                    </FormLabel>
+                    <RadioGroup row name="row-radio-buttons-group">
+                      <FormControlLabel
+                        value="Everyday"
+                        control={<Radio />}
+                        label="Everyday"
+                      />
+                      <FormControlLabel
+                        value="Sometimes"
+                        control={<Radio />}
+                        label="Sometimes"
+                      />
+                      <FormControlLabel
+                        value="On weekends"
+                        control={<Radio />}
+                        label="On weekends"
+                      />
+                      <FormControlLabel
+                        value="Barely or never"
+                        control={<Radio />}
+                        label="Barely or never"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <FormControl component="fieldset" margin="normal">
+                    <FormLabel component="legend">
+                      How many people are on your project team?
+                    </FormLabel>
+                    <RadioGroup row name="row-radio-buttons-group">
+                      <FormControlLabel
+                        value="Just me"
+                        control={<Radio />}
+                        label="Just me"
+                      />
+                      <FormControlLabel
+                        value="2 - 4 people"
+                        control={<Radio />}
+                        label="2 - 4 people"
+                      />
+                      <FormControlLabel
+                        value="5 - 10 people"
+                        control={<Radio />}
+                        label="5 or more people"
+                      />
+                      <FormControlLabel
+                        value="Barely or never"
+                        control={<Radio />}
+                        label="Barely or never"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </Grid>
               ),
             }[props.activeStep + 1]
