@@ -4,25 +4,28 @@ import { Box, Button, Divider, Grid, Typography } from '@material-ui/core'
 import { ProjectGrid } from './projects'
 import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../src/db'
+import Link from '../src/Link'
 
 const heroImg = '/heroImg.jpeg'
 
 export function Hero() {
   return (
-    <Grid container marginY="140px">
+    <Grid container my="140px">
       <Grid item xs px={3}>
         <Grid m="auto">
-          <Typography variant="h2" component="h1" fontWeight="bold" my={3}>
+          <Typography variant="h1" fontWeight={400} my={3}>
             Build <span style={{ color: 'green' }}>Green</span> Projects
           </Typography>
-          <Typography variant="h5" component="p" my={4}>
+          <Typography variant="body1" my={5}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
             blanditiis tenetur unde suscipit, quam beatae rerum inventore
             consectetur.
           </Typography>
-          <Button variant="contained" sx={{ px: 4, py: 2, fontSize: 'medium' }}>
-            Start Building
-          </Button>
+          <Link href="/projects">
+            <Button variant="contained" size="large">
+              Start Building
+            </Button>
+          </Link>
         </Grid>
       </Grid>
       <Grid item xs px={3}>
@@ -40,9 +43,9 @@ function HowItWorks() {
       justifyContent="center"
       alignItems="center"
       spacing={2}
-      marginY="100px"
+      my={5}
     >
-      <Grid item md={5} px={3}>
+      <Grid item xs={12} md={5}>
         <Grid item>
           <Typography variant="h3" fontWeight="bold" my={3}>
             How it <span style={{ color: 'green' }}>Works</span>
@@ -53,11 +56,11 @@ function HowItWorks() {
         </Grid>
       </Grid>
       <Grid item md={1} />
-      <Grid item md={6}>
+      <Grid item xs={12} md={5}>
         <Typography variant="h5" fontWeight="bold" color="primary">
           1. Find a project
         </Typography>
-        <Typography variant="h5" component="p" my={2} ml={5}>
+        <Typography variant="body1" my={2} ml={2}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
           blanditiis tenetur unde suscipit.
         </Typography>
@@ -65,7 +68,7 @@ function HowItWorks() {
         <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
           2. Get your supplies
         </Typography>
-        <Typography variant="h5" component="p" my={1} ml={5}>
+        <Typography variant="body1" my={1} ml={2}>
           Order the supplies from us.
           <br />
           Shipping is 2 days
@@ -74,7 +77,7 @@ function HowItWorks() {
         <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
           3. Have fun!!
         </Typography>
-        <Typography variant="h5" component="p" my={2} ml={5}>
+        <Typography variant="body1" my={2} ml={2}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
           blanditiis tenetur unde suscipit.
         </Typography>
@@ -88,11 +91,11 @@ export default function Index({ projects }: { projects: any }) {
     <Container maxWidth="lg">
       <Hero />
 
-      <hr style={{ border: '1px solid black' }} />
+      <Divider />
 
       <HowItWorks />
 
-      <hr style={{ border: '1px solid black' }} />
+      <Divider />
 
       <Grid container direction="column" spacing={2} marginY="100px">
         <Grid item>
@@ -104,6 +107,7 @@ export default function Index({ projects }: { projects: any }) {
           <ProjectGrid projects={projects} />
         </Grid>
       </Grid>
+      <Divider />
     </Container>
   )
 }
