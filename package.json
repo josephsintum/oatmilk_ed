@@ -10,15 +10,13 @@
     "@ibm-cloud/cloudant": "^0.0.16",
     "@material-ui/core": "next",
     "@material-ui/icons": "^5.0.0-beta.1",
-    "@types/react-select": "^4.0.17",
     "clsx": "latest",
     "next": "latest",
     "next-auth": "^3.27.3",
     "next-connect": "^0.10.1",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.12.1",
-    "react-select": "^4.3.1"
+    "react-hook-form": "^7.12.1"
   },
   "scripts": {
     "dev": "next",
