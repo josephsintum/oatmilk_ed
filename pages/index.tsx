@@ -16,10 +16,12 @@ export function Hero() {
           <Typography variant="h1" fontWeight={400} my={3}>
             Build <span style={{ color: 'green' }}>Green</span> Projects
           </Typography>
-          <Typography variant="body1" my={5}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-            blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            consectetur.
+          <Typography variant="h5" my={5}>
+            Find fun projects that will help save the Earth.
+            <br />
+            Create inspiring projects and share with friends.
+            <br />
+            Get inspired today!
           </Typography>
           <Link href="/projects">
             <Button variant="contained" size="large">
@@ -61,25 +63,26 @@ function HowItWorks() {
           1. Find a project
         </Typography>
         <Typography variant="body1" my={2} ml={2}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit.
+          We offer projects for all ages and interests
+          <br />
+          Create a new project if you can't find it.
         </Typography>
         <Divider />
         <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
           2. Get your supplies
         </Typography>
         <Typography variant="body1" my={1} ml={2}>
-          Order the supplies from us.
+          Order your sustainable supplies from us.
           <br />
-          Shipping is 2 days
+          Have your school pay for it.
+          <br />2 - 3 days shipping.
         </Typography>
         <Divider />
         <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
           3. Have fun!!
         </Typography>
         <Typography variant="body1" my={2} ml={2}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit.
+          Our projects are interesting and inspire creative problem solving.
         </Typography>
       </Grid>
     </Grid>

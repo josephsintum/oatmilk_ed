@@ -343,8 +343,6 @@ const Interest = ({ projects }: any) => {
           <Grid item xs={12} mb={4} fontWeight="bold">
             <Typography variant="h3">
               Hello {session ? session?.user?.name : ''}
-              <br />
-              What do you like
             </Typography>
           </Grid>
           <Grid item xs={12}>
