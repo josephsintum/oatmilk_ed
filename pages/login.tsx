@@ -43,7 +43,7 @@ export default function Login() {
             }}
             onClick={() =>
               signIn('google', {
-                callbackUrl: 'http://localhost:3000/projects',
+                callbackUrl: '/projects',
               })
             }
           >
@@ -66,7 +66,7 @@ export default function Login() {
             }}
             onClick={() =>
               signIn('github', {
-                callbackUrl: 'http://localhost:3000/projects',
+                callbackUrl: '/projects',
               })
             }
           >

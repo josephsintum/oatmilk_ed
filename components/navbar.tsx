@@ -30,7 +30,7 @@ export default function Navbar() {
           textTransform: 'uppercase',
         }}
       >
-        Oat Craft
+        Oat Crafts
       </Link>
       <Link
         noWrap

@@ -43,7 +43,7 @@ export default function Signup() {
             }}
             onClick={() =>
               signIn('google', {
-                callbackUrl: 'http://localhost:3000/interest',
+                callbackUrl: '/interest',
               })
             }
           >
@@ -66,7 +66,7 @@ export default function Signup() {
             }}
             onClick={() =>
               signIn('github', {
-                callbackUrl: 'http://localhost:3000/interest',
+                callbackUrl: '/interest',
               })
             }
           >
