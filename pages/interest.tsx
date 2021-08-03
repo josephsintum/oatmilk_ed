@@ -29,6 +29,7 @@ import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../src/db'
 import { Project } from './projects/[projectId]'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import Head from 'next/head'
 
 const steps = ['About You', 'Topics & Interest', 'Almost Done...']
 
@@ -338,6 +339,9 @@ const Interest = ({ projects }: any) => {
 
   return (
     <>
+      <Head>
+        <title>Oat Crafts - Interest</title>
+      </Head>
       <Container maxWidth="lg">
         <Grid container my="100px">
           <Grid item xs={12} mb={4} fontWeight="bold">

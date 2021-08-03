@@ -5,6 +5,7 @@ import { ProjectGrid } from './projects'
 import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../src/db'
 import Link from '../src/Link'
+import Head from 'next/head'
 
 const heroImg = '/heroImg.jpeg'
 
@@ -92,6 +93,9 @@ function HowItWorks() {
 export default function Index({ projects }: { projects: any }) {
   return (
     <Container maxWidth="lg">
+      <Head>
+        <title>Oat Crafts - Home</title>
+      </Head>
       <Hero />
 
       <Divider />

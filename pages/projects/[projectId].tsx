@@ -25,6 +25,7 @@ import { GetServerSideProps } from 'next'
 import { getProjectById } from '../../src/db'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { useForm, Controller } from 'react-hook-form'
+import Head from 'next/head'
 
 export const Comments = ({ someComments }: { someComments?: Comment[] }) => {
   const [session] = useSession()
@@ -131,6 +132,9 @@ const ProjectId = ({ project }: { project: Project }) => {
 
   return (
     <>
+      <Head>
+        <title>Oat Crafts - {project.title}</title>
+      </Head>
       <Container maxWidth="lg">
         <Grid my="100px">
           <Grid my={5}>

@@ -24,6 +24,7 @@ import { Project } from './[projectId]'
 import CloseIcon from '@material-ui/icons/Close'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 const project = {
   id: '1',
@@ -136,6 +137,9 @@ const Create = () => {
 
   return (
     <>
+      <Head>
+        <title>Oat Crafts - Create Project</title>
+      </Head>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container maxWidth="lg">
           <Grid my="100px">

@@ -16,6 +16,7 @@ import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../../src/db'
 import { Project } from './[projectId]'
+import Head from 'next/head'
 
 export function ProjectGrid({
   projects,
@@ -113,18 +114,23 @@ export function ProjectCard({ project, ...rest }: { project: Project }) {
 
 export default function Index({ projects }: { projects: any }) {
   return (
-    <Container maxWidth="lg">
-      <Grid container direction="column" spacing={2} marginY="100px">
-        <Grid item>
-          <Typography variant="h3" fontWeight="bold" my={3}>
-            Explore <span style={{ color: 'green' }}>projects</span>
-          </Typography>
+    <>
+      <Head>
+        <title>Oat Crafts - Projects</title>
+      </Head>
+      <Container maxWidth="lg">
+        <Grid container direction="column" spacing={2} marginY="100px">
+          <Grid item>
+            <Typography variant="h3" fontWeight="bold" my={3}>
+              Explore <span style={{ color: 'green' }}>projects</span>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <ProjectGrid projects={projects} />
+          </Grid>
         </Grid>
-        <Grid item>
-          <ProjectGrid projects={projects} />
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   )
 }
 
