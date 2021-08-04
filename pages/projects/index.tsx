@@ -103,7 +103,7 @@ export function ProjectCard({ project, ...rest }: { project: Project }) {
                 }}
               />
             }
-            label="34"
+            label={Math.floor(Math.random() * 400)}
             sx={{ ml: 'auto', fontWeight: 'bold' }}
             labelPlacement="end"
           />
