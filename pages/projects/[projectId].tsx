@@ -247,19 +247,19 @@ const ProjectId = ({ project }: { project: Project }) => {
                       sx={{
                         color: 'pink',
                         '&.Mui-checked': {
-                          color: 'red',
+                          color: 'orangered',
                         },
                       }}
                     />
                   }
-                  label="34 likes"
+                  label={Math.floor(Math.random() * 400) + ' likes'}
                   sx={{ ml: 'auto', fontWeight: 'bold' }}
                   labelPlacement="end"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <img
-                  src="/heroImg.jpeg"
+                  src={project.image || '/heroImg.jpeg'}
                   alt="Hero Image"
                   width="100%"
                   height="auto"
