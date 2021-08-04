@@ -433,6 +433,7 @@ const ProjectId = ({ project }: { project: Project }) => {
 
           <Comments someComments={project.someComments} />
         </Grid>
+        <Divider />
       </Container>
     </>
   )

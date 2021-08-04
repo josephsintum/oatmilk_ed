@@ -113,35 +113,86 @@ function HowItWorks() {
   )
 }
 
+function Mission() {
+  return (
+    <Grid
+      container
+      bgcolor="primary.main"
+      alignItems="center"
+      justifyContent="center"
+      py="50px"
+      my="50px"
+      sx={{ borderRadius: 2 }}
+      // spacing={8}
+    >
+      <Grid item xs={12} md={5}>
+        <Typography
+          variant="h4"
+          color="secondary"
+          sx={{ lineHeight: '1.4em' }}
+          mb={3}
+        >
+          Climate Change needs lots of <strong>big ideas</strong> to solve it.
+          <br />
+          That's why are starting with you today.
+        </Typography>
+        <Link href="/signup">
+          <Button
+            color="secondary"
+            variant="outlined"
+            sx={{ border: '2px solid' }}
+          >
+            Get Started
+          </Button>
+        </Link>
+      </Grid>
+      <Grid item xs={12} md={1} />
+      <Grid item xs={12} md={4}>
+        <img
+          src="/kidwork.jpeg"
+          alt="Hero Image"
+          width="100%"
+          height="auto"
+          style={{ borderRadius: 8 }}
+        />
+      </Grid>
+    </Grid>
+  )
+}
+
 export default function Index({ projects }: { projects: any }) {
   return (
-    <Container maxWidth="lg">
+    <>
       <Head>
         <title>Oat Crafts - Home</title>
       </Head>
-      <Hero />
+      <Container maxWidth="lg">
+        <Hero />
 
-      <Divider />
+        <Divider />
 
-      <HowItWorks />
+        <HowItWorks />
 
-      <Divider />
+        <Divider />
 
-      <Grid container direction="column" spacing={2} marginY="100px">
-        <Grid item>
-          <Typography variant="h3" fontWeight="bold" my={3}>
-            Find a{' '}
-            <Box component="span" color="secondary.main">
-              project
-            </Box>
-          </Typography>
+        <Grid container direction="column" spacing={2} marginY="100px">
+          <Grid item>
+            <Typography variant="h3" fontWeight="bold" my={3}>
+              Find a{' '}
+              <Box component="span" color="secondary.main">
+                project
+              </Box>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <ProjectGrid projects={projects} />
+          </Grid>
         </Grid>
-        <Grid item>
-          <ProjectGrid projects={projects} />
-        </Grid>
-      </Grid>
-      <Divider />
-    </Container>
+        <Divider />
+        <Mission />
+        <Divider />
+      </Container>
+    </>
   )
 }
 
