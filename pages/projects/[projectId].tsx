@@ -9,6 +9,11 @@ import {
   CardMedia,
   Checkbox,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   FormControlLabel,
   FormGroup,
@@ -26,6 +31,81 @@ import { getProjectById } from '../../src/db'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { useForm, Controller } from 'react-hook-form'
 import Head from 'next/head'
+import Checkout from '../../components/Checkout'
+
+export function CheckoutDialog({ items }: { items: Material[] }) {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  return (
+    <>
+      <Button fullWidth variant="contained" onClick={handleClickOpen}>
+        Pay Now
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <Checkout items={items} />
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+export function PayFormDialog() {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  return (
+    <>
+      <Button
+        fullWidth
+        variant="outlined"
+        sx={{
+          border: '2px solid black',
+          color: 'black',
+          ':hover': { border: '2px solid black' },
+        }}
+        onClick={handleClickOpen}
+      >
+        Order With School Account
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Order With School Account</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To have you school pay for materials, please enter your email
+            address here. We will contact your school and update you.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="normal"
+            label="School Email Address"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Request</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
 
 export const Comments = ({ someComments }: { someComments?: Comment[] }) => {
   const [session] = useSession()
@@ -117,18 +197,24 @@ export interface Project {
 }
 
 const ProjectId = ({ project }: { project: Project }) => {
-  const { control, watch } = useForm<{ material: boolean[] }>()
+  const { control, watch, getValues } = useForm<{ material: boolean[] }>()
   const [total, setTotal] = React.useState<number>()
+  const [materialCheckList, setMaterialCheckList] = React.useState<Material[]>(
+    []
+  )
 
   React.useEffect(() => {
     let sum = 0
-    watch('material')?.map((val, index) => {
+    let materialList: Material[] = []
+    getValues('material')?.map((val, index) => {
       if (val) {
         sum += project.materials[index].price
+        materialList.push(project.materials[index])
       }
     })
     setTotal(sum)
-  }, [watch('material')])
+    setMaterialCheckList(() => [...materialList])
+  }, [JSON.stringify(watch('material')), total])
 
   return (
     <>
@@ -303,13 +389,10 @@ const ProjectId = ({ project }: { project: Project }) => {
                       textAlign="center"
                       mb={4}
                     >
-                      ${total}
+                      ${total?.toFixed(2)}
                     </Typography>
                   </Box>
-
-                  <Button fullWidth variant="contained">
-                    Buy Now
-                  </Button>
+                  <CheckoutDialog items={materialCheckList} />
                   <Typography
                     variant="overline"
                     component="p"
@@ -318,17 +401,7 @@ const ProjectId = ({ project }: { project: Project }) => {
                   >
                     OR
                   </Typography>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    sx={{
-                      border: '2px solid black',
-                      color: 'black',
-                      ':hover': { border: '2px solid black' },
-                    }}
-                  >
-                    Order With School Account
-                  </Button>
+                  <PayFormDialog />
                   <Typography
                     variant="overline"
                     component="p"
