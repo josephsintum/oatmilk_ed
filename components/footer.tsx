@@ -20,8 +20,8 @@ export default function Footer() {
           }}
         >
           <Container maxWidth="sm">
-            <Typography variant="body1">
-              <strong>Oat Craft</strong> by Team Oat Milk 🥛
+            <Typography variant="body1" textAlign='center'>
+              <strong>Oat Craft.</strong> Made with ❤️ by Team Oat Milk 🥛
             </Typography>
           </Container>
         </Box>

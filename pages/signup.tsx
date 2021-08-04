@@ -48,7 +48,7 @@ export default function Signup() {
               }}
               onClick={() =>
                 signIn('google', {
-                  callbackUrl: '/interest',
+                  callbackUrl: window.location.origin + '/interest',
                 })
               }
             >
@@ -71,7 +71,7 @@ export default function Signup() {
               }}
               onClick={() =>
                 signIn('github', {
-                  callbackUrl: '/interest',
+                  callbackUrl: window.location.origin + '/interest',
                 })
               }
             >
