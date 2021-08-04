@@ -113,7 +113,11 @@ export function ProjectCard({ project, ...rest }: { project: Project }) {
   )
 }
 
-export default function Index({ projects }: { projects: any }) {
+export default function Index({
+  projects,
+}: {
+  projects: { doc: Project; id: string }[]
+}) {
   return (
     <>
       <Head>
@@ -123,9 +127,10 @@ export default function Index({ projects }: { projects: any }) {
         <Grid container direction="column" spacing={2} marginY="100px">
           <Grid item>
             <Typography variant="h3" fontWeight="bold" my={3}>
-              Explore <Box component="span" color="secondary.main">
-              Projects
-            </Box>
+              Explore{' '}
+              <Box component="span" color="secondary.main">
+                Projects
+              </Box>
             </Typography>
           </Grid>
           <Grid item>

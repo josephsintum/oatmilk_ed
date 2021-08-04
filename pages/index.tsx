@@ -6,6 +6,8 @@ import { GetServerSideProps } from 'next'
 import { getAllProjects } from '../src/db'
 import Link from '../src/Link'
 import Head from 'next/head'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import { Project } from './projects/[projectId]'
 
 export function Hero() {
   return (
@@ -160,7 +162,11 @@ function Mission() {
   )
 }
 
-export default function Index({ projects }: { projects: any }) {
+export default function Index({
+  projects,
+}: {
+  projects: { doc: Project; id: string }[]
+}) {
   return (
     <>
       <Head>
@@ -175,8 +181,8 @@ export default function Index({ projects }: { projects: any }) {
 
         <Divider />
 
-        <Grid container direction="column" spacing={2} marginY="100px">
-          <Grid item>
+        <Grid container spacing={2} marginY="50px">
+          <Grid item xs>
             <Typography variant="h3" fontWeight="bold" my={3}>
               Find a{' '}
               <Box component="span" color="secondary.main">
@@ -184,8 +190,20 @@ export default function Index({ projects }: { projects: any }) {
               </Box>
             </Typography>
           </Grid>
-          <Grid item>
-            <ProjectGrid projects={projects} />
+          <Grid item xs={2} display="flex">
+            <Link href="/projects" sx={{ textDecoration: 'none', float: 'right', my: 'auto' }}>
+              <Button
+                variant="contained"
+                endIcon={<ArrowForwardIcon />}
+                color='secondary'
+                sx={{ }}
+              >
+                Explore More
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={12}>
+            <ProjectGrid projects={projects.slice(0, 3)} />
           </Grid>
         </Grid>
         <Divider />
