@@ -28,7 +28,10 @@ export default function Signup() {
           }}
         >
           <Typography component="h1" variant="h2" my={5}>
-            Get <span style={{ color: 'green' }}>Started</span>
+            Get{' '}
+            <Box component="span" color="secondary.main">
+              Started
+            </Box>
           </Typography>
           <Box sx={{ mt: 4 }}>
             <Button

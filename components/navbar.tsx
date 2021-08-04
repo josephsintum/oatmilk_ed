@@ -1,4 +1,11 @@
-import { Button, Divider, Menu, MenuItem, Toolbar } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Divider,
+  Menu,
+  MenuItem,
+  Toolbar,
+} from '@material-ui/core'
 import Link from '../src/Link'
 import * as React from 'react'
 import { signOut, useSession } from 'next-auth/client'
@@ -22,12 +29,12 @@ export default function Navbar() {
         align="left"
         noWrap
         href="/"
-        fontWeight="bold"
+        fontWeight="900"
         sx={{
-          flex: 1,
           textDecoration: 'none',
           color: 'black',
           textTransform: 'uppercase',
+          flex: 1,
         }}
       >
         Oat Crafts
@@ -58,7 +65,7 @@ export default function Navbar() {
       </Link>
       <Language />
       {!session && (
-        <>
+        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
           {/*Not logged in*/}
           <Link
             noWrap
@@ -97,10 +104,10 @@ export default function Navbar() {
               Get Started
             </Button>
           </Link>
-        </>
+        </Box>
       )}
       {session && (
-        <>
+        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
           {/*Logged In*/}
           <Link
             noWrap
@@ -108,7 +115,7 @@ export default function Navbar() {
             href="/profile"
             sx={{ p: 2, flexShrink: 0, textDecoration: 'none', color: 'black' }}
           >
-            Profile
+            Hello {session.user?.name}
           </Link>
           <Button
             onClick={() => signOut({ callbackUrl: '/' })}
@@ -116,7 +123,7 @@ export default function Navbar() {
           >
             Sign Out
           </Button>
-        </>
+        </Box>
       )}
     </Toolbar>
   )

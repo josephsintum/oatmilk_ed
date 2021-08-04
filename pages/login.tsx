@@ -28,7 +28,10 @@ export default function Login() {
           }}
         >
           <Typography component="h1" variant="h2" my={5}>
-            Welcome <span style={{ color: 'green' }}>Back</span>
+            Welcome{' '}
+            <Box component="span" color="secondary.main">
+              Back
+            </Box>
           </Typography>
           <Box sx={{ mt: 4 }}>
             <Button

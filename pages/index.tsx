@@ -7,32 +7,52 @@ import { getAllProjects } from '../src/db'
 import Link from '../src/Link'
 import Head from 'next/head'
 
-const heroImg = '/heroImg.jpeg'
-
 export function Hero() {
   return (
     <Grid container my="140px">
       <Grid item xs px={3}>
         <Grid m="auto">
-          <Typography variant="h1" fontWeight={400} my={3}>
-            Build <span style={{ color: 'green' }}>Green</span> Projects
+          <Typography variant="h1" fontWeight={900} my={3} fontStyle="italic">
+            Build{' '}
+            <Box component="span" color="secondary.main">
+              Green
+            </Box>{' '}
+            Projects
           </Typography>
-          <Typography variant="h5" my={5}>
+          <Typography variant="h5" my={5} sx={{ lineHeight: 2 }}>
             Find fun projects that will help save the Earth.
             <br />
             Create inspiring projects and share with friends.
             <br />
             Get inspired today!
           </Typography>
-          <Link href="/projects">
-            <Button variant="contained" size="large">
+          <Link
+            href="/signup"
+            sx={{
+              textDecoration: 'none',
+            }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                color: 'primary.main',
+                bgcolor: 'secondary.main',
+                fontSize: 'large',
+                fontWeight: 'bold',
+                fontStyle: 'italic',
+                ':hover': {
+                  color: 'secondary.main',
+                },
+              }}
+            >
               Start Building
             </Button>
           </Link>
         </Grid>
       </Grid>
-      <Grid item xs px={3}>
-        <img src={heroImg} alt="Hero Image" width="100%" height="auto" />
+      <Grid item xs md={5} px={3}>
+        <img src="/hero1.jpeg" alt="Hero Image" width="100%" height="auto" />
       </Grid>
     </Grid>
   )
@@ -51,16 +71,19 @@ function HowItWorks() {
       <Grid item xs={12} md={5}>
         <Grid item>
           <Typography variant="h3" fontWeight="bold" my={3}>
-            How it <span style={{ color: 'green' }}>Works</span>
+            How it{' '}
+            <Box component="span" color="secondary.main">
+              Works
+            </Box>
           </Typography>
           <Box my={4}>
-            <img src={heroImg} alt="Hero Image" width="100%" height="auto" />
+            <img src="how.jpeg" alt="Hero Image" width="100%" height="auto" />
           </Box>
         </Grid>
       </Grid>
       <Grid item md={1} />
       <Grid item xs={12} md={5}>
-        <Typography variant="h5" fontWeight="bold" color="primary">
+        <Typography variant="h4" fontWeight="bold" color="primary">
           1. Find a project
         </Typography>
         <Typography variant="body1" my={2} ml={2}>
@@ -69,7 +92,7 @@ function HowItWorks() {
           Create a new project if you can't find it.
         </Typography>
         <Divider />
-        <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
+        <Typography variant="h4" fontWeight="bold" mt={3} color="primary">
           2. Get your supplies
         </Typography>
         <Typography variant="body1" my={1} ml={2}>
@@ -79,7 +102,7 @@ function HowItWorks() {
           <br />2 - 3 days shipping.
         </Typography>
         <Divider />
-        <Typography variant="h5" fontWeight="bold" mt={3} color="primary">
+        <Typography variant="h4" fontWeight="bold" mt={3} color="primary">
           3. Have fun!!
         </Typography>
         <Typography variant="body1" my={2} ml={2}>
@@ -107,7 +130,10 @@ export default function Index({ projects }: { projects: any }) {
       <Grid container direction="column" spacing={2} marginY="100px">
         <Grid item>
           <Typography variant="h3" fontWeight="bold" my={3}>
-            Find a <span style={{ color: 'green' }}>project</span>
+            Find a{' '}
+            <Box component="span" color="secondary.main">
+              project
+            </Box>
           </Typography>
         </Grid>
         <Grid item>

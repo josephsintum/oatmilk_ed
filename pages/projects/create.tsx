@@ -26,71 +26,15 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-const project = {
-  id: '1',
-  title: 'Self Driving Car',
-  image: '/heroImg.jpeg',
-  age: '12 - 115',
-  topic: 'Artificial Intelligence',
-  body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamt.',
-  materials: [
-    { title: 'motor', img: '/heroImg.jpeg', price: 2.99 },
-    { title: 'propeller', img: '/heroImg.jpeg', price: 4.5 },
-    { title: 'wires', img: '/heroImg.jpeg', price: 1.99 },
-    { title: 'switch', img: '/heroImg.jpeg', price: 1.99 },
-    { title: 'solar panel', img: '/heroImg.jpeg', price: 12.99 },
-    { title: 'bulb', img: '/heroImg.jpeg', price: 3.99 },
-  ],
-  steps: [
-    {
-      index: 0,
-      value:
-        'Connect the wires on the motor to the solar panel using soldering',
-    },
-    {
-      index: 1,
-      value:
-        'Cut two long rectangles of Styrofoam and glue them down to the cardboard with 3 inches separation',
-    },
-    {
-      index: 2,
-      value: 'Glue the motor to one Styrofoam',
-    },
-    {
-      index: 3,
-      value:
-        'Glue the solar panel to the other Styrofoam facing towards the sun',
-    },
-    {
-      index: 4,
-      value: 'Attach the propeller to the motor',
-    },
-    {
-      index: 5,
-      value: 'Congrats! You’re done!',
-    },
-  ],
-  video: 'https://www.youtube.com/embed/NgXqD_JDn6s',
-  someComments: [
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-    },
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamt',
-    },
-    {
-      name: 'John Appleseed',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit',
-    },
-  ],
-}
+const materials = [
+  { title: 'motor', img: '/materials/motor.jpg', price: 12.39 },
+  { title: 'propeller', img: '/materials/propeller.jpg', price: 17.53 },
+  { title: 'wires', img: '/materials/wires.jpg', price: 4.99 },
+  { title: 'switch', img: '/materials/switch.jpg', price: 3.75 },
+  { title: 'solar panel', img: '/materials/solar_panel.jpg', price: 12.9 },
+  { title: 'bulb', img: '/materials/bulbs.jpg', price: 3.99 },
+  { title: 'raspberry pi', img: '/materials/raspberry_pi.jpg', price: 25.4 },
+]
 
 const Create = () => {
   const router = useRouter()
@@ -144,7 +88,7 @@ const Create = () => {
         <Container maxWidth="lg">
           <Grid my="100px">
             <Typography variant="h2" fontWeight="bold">
-              Create a Project
+              Create New Project
             </Typography>
             <Grid my={5}>
               <Grid container spacing={4}>
@@ -238,7 +182,7 @@ const Create = () => {
             <Grid container my={5} spacing={4}>
               <Grid item xs={12}>
                 <Typography variant="h4" fontWeight="bold">
-                  Steps
+                  Add Steps and Youtube Video
                 </Typography>
               </Grid>
               <Grid item xs={12} md={5}>
@@ -315,7 +259,7 @@ const Create = () => {
             <Grid container my={5}>
               <Grid item xs={12} my={4}>
                 <Typography variant="h4" fontWeight="bold">
-                  Materials
+                  Choose Materials
                 </Typography>
               </Grid>
               <Grid container spacing={4}>
@@ -324,7 +268,7 @@ const Create = () => {
                     Choose materials
                   </Typography>
                   <Grid container spacing={3}>
-                    {project.materials.map((req) => (
+                    {materials.map((req) => (
                       <Grid item md={6} key={req.title}>
                         <ButtonBase
                           focusRipple
@@ -335,6 +279,7 @@ const Create = () => {
                             sx={{
                               display: 'flex',
                               width: '340px',
+                              height: '100px',
                               p: 1,
                               border: '1px solid black',
                               borderRadius: 2,
@@ -351,7 +296,11 @@ const Create = () => {
                             <CardContent sx={{ flex: '1 0 auto', py: 1 }}>
                               <Stack direction="row" alignItems="center">
                                 <Box>
-                                  <Typography variant="subtitle1" mb="auto">
+                                  <Typography
+                                    variant="subtitle1"
+                                    mb="auto"
+                                    sx={{ textTransform: 'capitalize' }}
+                                  >
                                     {req.title}
                                   </Typography>
                                   <Typography variant="h6" fontWeight="bold">
@@ -379,6 +328,7 @@ const Create = () => {
                           sx={{
                             display: 'flex',
                             width: '340px',
+                            height: '100px',
                             p: 1,
                             border: '1px solid black',
                             borderRadius: 2,
