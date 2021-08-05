@@ -14,7 +14,7 @@ export function Hero() {
     <Grid container my="140px">
       <Grid item xs px={3}>
         <Grid m="auto">
-          <Typography variant="h1" fontWeight={900} my={3} fontStyle="italic">
+          <Typography variant="h1" fontWeight={900} my={3} color="primary" fontStyle="italic">
             Build{' '}
             <Box component="span" color="secondary.main">
               Green

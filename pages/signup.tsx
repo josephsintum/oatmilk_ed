@@ -49,6 +49,7 @@ export default function Signup() {
                   boxShadow: 3,
                 },
               }}
+              disabled
               onClick={() =>
                 signIn('google', {
                   callbackUrl: window.location.origin + '/interest',

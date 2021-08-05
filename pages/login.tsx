@@ -49,13 +49,10 @@ export default function Login() {
                   boxShadow: 3,
                 },
               }}
-              onClick={() =>
-                signIn('google', {
-                  callbackUrl: '/projects',
-                })
-              }
+              disabled
+              onClick={() => alert('Google Coming soon')}
             >
-              Sign In With Google
+              Sign In With Google coming soon
             </Button>
             <Button
               fullWidth

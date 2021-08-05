@@ -37,7 +37,12 @@ export default function Navbar() {
           flex: 1,
         }}
       >
-        Oat Crafts
+        <img
+          src="/logo.png"
+          alt="Hero Image"
+          width="50%"
+          style={{ borderRadius: 8 }}
+        />
       </Link>
       <Link
         noWrap
@@ -169,17 +174,6 @@ function Language() {
             sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
           >
             🇲🇽 Spanish
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link
-            noWrap
-            variant="button"
-            href="/home_fr.html"
-            target="_blank"
-            sx={{ flexShrink: 0, textDecoration: 'none', color: 'black' }}
-          >
-            🇫🇷 French
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
