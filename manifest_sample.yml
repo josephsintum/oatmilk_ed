@@ -1,0 +1,20 @@
+# rename to manifest.yml
+# update the require env
+# build locally before push to cloud
+---
+applications:
+  - path: .
+    memory: 256M
+    instances: 1
+    name: oatcraft
+    disk_quota: 1024M
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
+    env:
+      NEXTAUTH_URL: your domain
+      GITHUB_ID: github oauth id
+      GITHUB_SECRET: github oauth secret
+      GOOGLE_ID: google oauth id
+      GOOGLE_SECRET: google oauth secret
+      CLOUDANT_URL: cloudant url
+      CLOUDANT_APIKEY: cloudant api key
